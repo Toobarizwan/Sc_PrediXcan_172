@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# ==============================
+# S-PrediXcan Batch Runner
+# This script runs SPrediXcan for all immune cell models in sequence.
+# ==============================
+
+SPREDIXCAN=/home/tooba/MetaXcan/software/SPrediXcan.py
+MODEL_DIR=/home/wheelerlab3/Data/predictdb_models/scPrediXcan_models/l-ctPred_models_for_immune_cell_types_from_OneK1K_dataset
+GWAS_FILE=/home/tooba/hg38_SPx_format_GCST90479798.h.tsv
+
+# Common parameters
+COMMON_ARGS="--gwas_file $GWAS_FILE \
+--snp_column panel_variant_id \
+--chromosome_column chromosome \
+--or_column odds_ratio \
+--effect_allele_column effect_allele \
+--non_effect_allele_column non_effect_allele \
+--pvalue_column pvalue \
+--beta_column effect_size \
+--keep_non_rsid \
+--model_db_snp_key varID"
+
+# Looping through each model file
+for DB_FILE in $MODEL_DIR/*.db; do
+    BASE=$(basename "$DB_FILE" .db)
+
+    COV_FILE="$MODEL_DIR/${BASE}_covariances.txt.gz"
+
+    OUTPUT="GCST90479798_predixcan_output_immune_${BASE}.csv"
+
+    echo "======================================"
+    echo "Running SPrediXcan for model: $BASE"
+    echo "======================================"
+
+    python $SPREDIXCAN \
+        --model_db_path "$DB_FILE" \
+        --covariance "$COV_FILE" \
+        $COMMON_ARGS \
+        --output_file "$OUTPUT"
+
+    echo "Finished $BASE"
+    echo ""
+done
+
+echo "All SPrediXcan jobs completed!"
