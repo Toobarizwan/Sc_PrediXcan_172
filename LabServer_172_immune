@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # ==============================
-# S-PrediXcan Batch Runner
-# This script runs SPrediXcan for all immune cell models in sequence.
+# Sc-PrediXcan Batch Runner
+# This script runs ScPrediXcan for all immune cell models in sequence.
 # ==============================
 
-SPREDIXCAN=/home/tooba/MetaXcan/software/SPrediXcan.py
+ScPREDIXCAN=/home/tooba/MetaXcan/software/SPrediXcan.py
 MODEL_DIR=/home/wheelerlab3/Data/predictdb_models/scPrediXcan_models/l-ctPred_models_for_immune_cell_types_from_OneK1K_dataset
 GWAS_FILE=/home/tooba/hg38_SPx_format_GCST90479798.h.tsv
 
@@ -27,13 +27,13 @@ for DB_FILE in $MODEL_DIR/*.db; do
 
     COV_FILE="$MODEL_DIR/${BASE}_covariances.txt.gz"
 
-    OUTPUT="GCST90479798_predixcan_output_immune_${BASE}.csv"
+    OUTPUT="GCST90479798_scpredixcan_output_immune_${BASE}.csv"
 
     echo "======================================"
-    echo "Running SPrediXcan for model: $BASE"
+    echo "Running ScPrediXcan for model: $BASE"
     echo "======================================"
 
-    python $SPREDIXCAN \
+    python $ScPREDIXCAN \
         --model_db_path "$DB_FILE" \
         --covariance "$COV_FILE" \
         $COMMON_ARGS \
@@ -43,4 +43,4 @@ for DB_FILE in $MODEL_DIR/*.db; do
     echo ""
 done
 
-echo "All SPrediXcan jobs completed!"
+echo "All Sc-PrediXcan jobs completed!"
