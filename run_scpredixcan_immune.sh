@@ -3,6 +3,10 @@
 # stop if any command fails
 set -e
 
+# Initialize conda
+source ~/miniconda3/etc/profile.d/conda.sh
+conda activate imlabtools
+
 PHECODE=172
 POP=META
 CELL_TYPE=immune
