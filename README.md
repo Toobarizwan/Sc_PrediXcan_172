@@ -6,7 +6,7 @@ chmod +x ~/Sc_PrediXcan_172/run_predixcan_islet_sequential.sh
 ````
 
 ````
-.~/Sc_PrediXcan_172//run_predixcan_islet_sequential.sh
+. ~/Sc_PrediXcan_172/run_predixcan_islet_sequential.sh
 ````
 
 #### Monitor:
