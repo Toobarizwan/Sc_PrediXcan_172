@@ -2,15 +2,15 @@
 set -e
 
 # Load environment
-source ~/.bashrc
-conda activate imlabtools
+#source ~/.bashrc
+#conda activate imlabtools
 
 # Acinar (wrapper)
-bash ~/aou_sc_predixcan/00wrapper.sh --phecode 172 --pop META --ref Acinar --cell_type islet
-echo "Finished Acinar"
+#bash ~/aou_sc_predixcan/00wrapper.sh --phecode 172 --pop META --ref Acinar --cell_type islet
+#echo "Finished Acinar"
 
-python ~/aou_sc_predixcan/03run_predixcan.py --phecode 172 --pop META --ref Activated_stellate --cell_type islet
-echo "Finished Activated_stellate"
+#python ~/aou_sc_predixcan/03run_predixcan.py --phecode 172 --pop META --ref Activated_stellate --cell_type islet
+#echo "Finished Activated_stellate"
 
 python ~/aou_sc_predixcan/03run_predixcan.py --phecode 172 --pop META --ref Alpha --cell_type islet
 echo "Finished Alpha"
