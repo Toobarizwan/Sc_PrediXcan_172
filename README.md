@@ -2,9 +2,7 @@
 This scripts runs Sc-PrediXcan on islet cell types for Skin Cancer (Phecode:172) on AoS.
 
 Installing pipeline in All of Us:
-````
-git clone https://github.com/Toobarizwan/Sc_PrediXcan_172
-````
+`git clone https://github.com/Toobarizwan/Sc_PrediXcan_172`
  
 ````
 chmod +x ~/Sc_PrediXcan_172/run_predixcan_islet_sequential.sh
