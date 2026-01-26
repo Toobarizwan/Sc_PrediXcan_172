@@ -1,16 +1,23 @@
 #!/bin/bash
 set -e
 
-source ~/.bashrc
-conda activate imlabtools
+#source ~/.bashrc
+#conda activate imlabtools
 
 python ~/aou_sc_predixcan/03run_predixcan.py --phecode 172 --pop META --ref CD14-positive_monocyte --cell_type immune
+
 python ~/aou_sc_predixcan/03run_predixcan.py --phecode 172 --pop META --ref CD16-negative_CD56-bright_natural_killer_cell_human --cell_type immune
+
 python ~/aou_sc_predixcan/03run_predixcan.py --phecode 172 --pop META --ref CD4-positive_alpha-beta_cytotoxic_T_cell --cell_type immune
+
 python ~/aou_sc_predixcan/03run_predixcan.py --phecode 172 --pop META --ref CD4-positive_alpha-beta_T_cell --cell_type immune
+
 python ~/aou_sc_predixcan/03run_predixcan.py --phecode 172 --pop META --ref CD8-positive_alpha-beta_T_cell --cell_type immune
+
 python ~/aou_sc_predixcan/03run_predixcan.py --phecode 172 --pop META --ref central_memory_CD4-positive_alpha-beta_T_cell --cell_type immune
+
 python ~/aou_sc_predixcan/03run_predixcan.py --phecode 172 --pop META --ref central_memory_CD8-positive_alpha-beta_T_cell --cell_type immune
+
 python ~/aou_sc_predixcan/03run_predixcan.py --phecode 172 --pop META --ref conventional_dendritic_cell --cell_type immune
 python ~/aou_sc_predixcan/03run_predixcan.py --phecode 172 --pop META --ref dendritic_cell --cell_type immune
 python ~/aou_sc_predixcan/03run_predixcan.py --phecode 172 --pop META --ref double_negative_thymocyte --cell_type immune
