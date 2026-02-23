@@ -33,6 +33,7 @@ Each file should follow the naming format:
 `META_predixcan_output_172_immune_cell_<cell_type>.csv`
 
 ## Step 1: Define Immune Cell Types
+````
 cell_types <- c(
   "CD14-low_CD16-positive_monocyte",
   "CD14-positive_monocyte",
@@ -63,9 +64,10 @@ cell_types <- c(
   "regulatory_T_cell",
   "transitional_stage_B_cell"
 )
+````
 
 ## Step 2: Read and Extract Required Columns
-``
+````
 cell_list <- list()
 
 for(cell in cell_types){
@@ -80,7 +82,7 @@ for(cell in cell_types){
   
   cell_list[[cell]] <- temp_small
 }
-``
+````
 
 Each dataframe now contains:
 
@@ -89,7 +91,7 @@ Each dataframe now contains:
 ## Step 3: Merge All Cell Type Dataframes
 
 Since genes may appear in different orders (or be missing) across cell types, we perform a full outer join across all dataframes using both gene and gene_name as identifiers.
-``
+````
 merged_matrix <- cell_list[[1]]
 
 for(i in 2:length(cell_list)) {
@@ -99,7 +101,7 @@ for(i in 2:length(cell_list)) {
                          by = c("gene", "gene_name"),
                          all = TRUE)
 }
-``
+````
 
 This creates a matrix where:
 - Rows represent genes
@@ -109,8 +111,8 @@ This creates a matrix where:
 Missing values (NA) indicate genes not present in that cell type model.
 
 ## Step 4: Export Matrix
-``
+````
 write.csv(merged_matrix,
           "Immune_ACAT_matrix.csv",
           row.names = FALSE)
-``
+````
