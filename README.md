@@ -30,7 +30,7 @@ Each file must contain the following columns:
 gene (Ensembl ID), gene_name and pvalue
 
 Each file should follow the naming format:
-`META_predixcan_output_172_immune_cell_<cell_type>.csv`
+`META_predixcan_output_<phecode>_immune_cell_<cell_type>.csv`
 
 ## Step 1: Define Immune Cell Types
 ````
