@@ -72,7 +72,7 @@ cell_list <- list()
 
 for(cell in cell_types){
   
-  file_name <- paste0("META_predixcan_output_172_immune_cell_", cell, ".csv")
+  file_name <- paste0("META_predixcan_output_<phecode>_immune_cell_", cell, ".csv")
   
   temp <- read.csv(file_name)
   
@@ -86,7 +86,7 @@ for(cell in cell_types){
 
 Each dataframe now contains:
 
-'| gene | gene_name | cell_type_pvalue |'
+`| gene | gene_name | cell_type_pvalue |`
 
 ## Step 3: Merge All Cell Type Dataframes
 
