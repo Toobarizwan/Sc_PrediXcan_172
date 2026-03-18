@@ -116,3 +116,104 @@ write.csv(merged_matrix,
           "Immune_ACAT_matrix.csv",
           row.names = FALSE)
 ````
+
+-------------------------------------------------------------------------------------------
+
+# Applying ACAT to Identify Cell-Type Specific vs Enriched Genes
+
+This section describes how to use the generated gene × cell type matrix to classify genes as cell-type specific or cell-type enriched using ACAT.
+
+## Step 5: Load Matrix and Prepare Data
+````
+gene_matrix <- read.csv("Immune_ACAT_matrix.csv")   # loading the matrix
+
+pvals <- gene_matrix[, -(1:2)]   # removing gene and gene_name columns
+````
+
+## Step 6: Compute Bonferroni Thresholds Per Cell Type
+
+Since each cell type may test a different number of genes, Bonferroni thresholds are computed separately.
+
+````
+bonf_thresholds <- sapply(cell_list, function(x) {
+  n_genes <- nrow(x)
+  0.05 / n_genes
+})
+````
+
+## Step 7: Identify Significant Associations
+````
+sig_matrix <- sweep(pvals, 2, bonf_thresholds, "<")
+````
+This creates a logical matrix where:
+`TRUE → Bonferroni significant`
+`FALSE → not significant`
+
+## Step 8: Count Significant Cell Types Per Gene
+````
+sig_counts <- rowSums(sig_matrix, na.rm = TRUE)
+````
+Interpretation:
+`0 → no association`
+`1 → candidate cell-type specific`
+`>1 → cell-type enriched`
+
+## Step 9: Select Candidate Genes
+````
+candidate_genes <- which(sig_counts == 1)
+````
+These are genes with exactly one Bonferroni-significant cell type.
+
+## Step 10: Define ACAT Function
+````
+ACAT <- function(p){
+  p <- p[!is.na(p)]
+  0.5 - atan(sum(tan((0.5 - p) * pi)))/pi
+}
+````
+## Step 11a: Apply ACAT (Single Gene Example)
+
+This demonstrates ACAT on one gene (e.g. row 1334).
+
+````
+gene_matrix$gene_name[1334]   # identify gene
+
+gene_pvals <- as.numeric(pvals[1334, ])
+
+sig_cell <- sig_matrix[1334, ]   # identify significant cell type
+
+pvals_rest <- gene_pvals[!sig_cell]   # remove that cell type
+
+length(pvals_rest)   # should be total cell types - 1
+
+ACAT(pvals_rest)
+````
+## Step 11b: Apply ACAT to All Candidate Genes
+````
+for(g in candidate_genes){
+  
+  print(gene_matrix$gene_name[g])
+  
+  gene_pvals <- as.numeric(pvals[g, ])
+  
+  sig_cell <- sig_matrix[g, ]
+  
+  pvals_rest <- gene_pvals[!sig_cell]
+  
+  print(names(sig_cell)[sig_cell])   # cell type with strongest signal
+  
+  acat_p <- ACAT(pvals_rest)
+  
+  print(acat_p)
+  
+  print("------")
+  
+}
+````
+### Interpretation
+`ACAT p-value > 0.05`
+signal is limited to one cell type → cell-type specific
+
+`ACAT p-value ≤ 0.05`
+signal is present across multiple cell types → cell-type enriched
+
