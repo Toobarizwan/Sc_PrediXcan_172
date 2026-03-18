@@ -158,20 +158,32 @@ Interpretation:
 `1 → candidate cell-type specific`
 `>1 → cell-type enriched`
 
-## Step 9: Select Candidate Genes
+## Step 9: Identify Cell Type of Signal
+````
+sig_celltype <- apply(sig_matrix, 1, function(x) {
+  if(sum(x, na.rm = TRUE) == 1) {
+    names(x)[which(x)]
+  } else {
+    NA
+  }
+})
+````
+This records which cell type shows the Bonferroni-significant signal.
+
+## Step 10: Select Candidate Genes
 ````
 candidate_genes <- which(sig_counts == 1)
 ````
 These are genes with exactly one Bonferroni-significant cell type.
 
-## Step 10: Define ACAT Function
+## Step 11: Define ACAT Function
 ````
 ACAT <- function(p){
   p <- p[!is.na(p)]
   0.5 - atan(sum(tan((0.5 - p) * pi)))/pi
 }
 ````
-## Step 11a: Apply ACAT (Single Gene Example)
+## Step 12a: Apply ACAT (Single Gene Example)
 
 This demonstrates ACAT on one gene (e.g. row 1334).
 
@@ -188,7 +200,7 @@ length(pvals_rest)   # should be total cell types - 1
 
 ACAT(pvals_rest)
 ````
-## Step 11b: Apply ACAT to All Candidate Genes
+## Step 12b: Apply ACAT to All Candidate Genes
 ````
 for(g in candidate_genes){
   
